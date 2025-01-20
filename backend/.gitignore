@@ -1,0 +1,45 @@
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel specific
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+/.fleet
+/.idea
+/.vscode
+
+# SQLite database
+/database/*.sqlite*
+
+# Logs y archivos generados
+*.log
+.DS_Store
+Thumbs.db
+
+# Archivos de dependencias y compilación
+/public/build
+/public/dist
+/public/css
+/public/js
+/public/mix-manifest.json
+
+# Testing
+.phpunit.cache
+coverage/
+
+# Docker
+docker-compose.override.yml

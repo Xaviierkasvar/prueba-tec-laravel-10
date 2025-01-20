@@ -143,6 +143,7 @@ npm run build
 ### Autenticación
 
 ```
+POST /api/register
 POST /api/login
 POST /api/logout
 POST /api/refresh

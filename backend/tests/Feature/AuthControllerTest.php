@@ -121,4 +121,112 @@ class AuthControllerTest extends TestCase
         $response = $this->getJson('/api/profile');
         $response->assertStatus(401);
     }
+
+    public function test_user_can_register_successfully()
+    {
+        $userData = [
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(201)
+            ->assertJsonStructure([
+                'status',
+                'user' => [
+                    'id',
+                    'name',
+                    'email'
+                ],
+                'access_token',
+                'token_type',
+                'expires_in'
+            ]);
+
+        // Verificar que el usuario se haya creado en la base de datos
+        $this->assertDatabaseHas('users', [
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com'
+        ]);
+    }
+
+    public function test_user_cannot_register_with_existing_email()
+    {
+        // Crear un usuario existente
+        User::factory()->create([
+            'email' => 'existing@example.com'
+        ]);
+
+        $userData = [
+            'name' => 'John Doe',
+            'email' => 'existing@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email'])
+            ->assertJsonFragment([
+                'errors' => [
+                    'email' => ['El correo electrónico ya está registrado']
+                ]
+            ]);
+    }
+
+    public function test_user_cannot_register_with_invalid_data()
+    {
+        $userData = [
+            'name' => '',
+            'email' => 'invalid-email',
+            'password' => '123',
+            'password_confirmation' => '456'
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['name', 'email', 'password']);
+    }
+
+    public function test_password_confirmation_must_match()
+    {
+        $userData = [
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'differentpassword'
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['password'])
+            ->assertJsonFragment([
+                'errors' => [
+                    'password' => ['La confirmación de contraseña no coincide']
+                ]
+            ]);
+    }
+
+    public function test_registered_user_receives_jwt_token()
+    {
+        $userData = [
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123'
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(201);
+        
+        // Verificar que se devuelve un token de acceso
+        $this->assertArrayHasKey('access_token', $response->json());
+    }
 }

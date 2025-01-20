@@ -13,6 +13,7 @@ class TaskController extends Controller
      * @OA\Get(
      *     path="/api/tasks",
      *     summary="Listar todas las tareas del usuario",
+     *      security={{"bearerAuth":{}}},
      *     description="Obtiene todas las tareas asociadas al usuario autenticado.",
      *     operationId="listTasks",
      *     tags={"Tasks"},
@@ -39,6 +40,7 @@ class TaskController extends Controller
      * @OA\Post(
      *     path="/api/tasks",
      *     summary="Crear una nueva tarea",
+     *     security={{"bearerAuth":{}}},
      *     description="Permite al usuario autenticado crear una nueva tarea.",
      *     operationId="createTask",
      *     tags={"Tasks"},
@@ -102,6 +104,7 @@ class TaskController extends Controller
      * @OA\Get(
      *     path="/api/tasks/{id}",
      *     summary="Mostrar una tarea específica",
+     *     security={{"bearerAuth":{}}},
      *     description="Obtiene los detalles de una tarea específica del usuario autenticado.",
      *     operationId="getTask",
      *     tags={"Tasks"},
@@ -151,6 +154,7 @@ class TaskController extends Controller
      * @OA\Put(
      *     path="/api/tasks/{id}",
      *     summary="Actualizar una tarea",
+     *     security={{"bearerAuth":{}}},
      *     description="Permite al usuario autenticado actualizar los detalles de una tarea existente.",
      *     operationId="updateTask",
      *     tags={"Tasks"},
@@ -226,6 +230,7 @@ class TaskController extends Controller
      * @OA\Delete(
      *     path="/api/tasks/{id}",
      *     summary="Eliminar una tarea",
+     *     security={{"bearerAuth":{}}},
      *     description="Permite al usuario autenticado eliminar una tarea existente.",
      *     operationId="deleteTask",
      *     tags={"Tasks"},
@@ -277,6 +282,7 @@ class TaskController extends Controller
      * @OA\Patch(
      *     path="/api/tasks/{id}/toggle-status",
      *     summary="Cambiar el estado de una tarea",
+     *     security={{"bearerAuth":{}}},
      *     description="Permite al usuario cambiar el estado de una tarea entre 'active' e 'inactive'.",
      *     operationId="toggleTaskStatus",
      *     tags={"Tasks"},

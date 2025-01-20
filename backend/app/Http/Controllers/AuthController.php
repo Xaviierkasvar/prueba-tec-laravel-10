@@ -19,7 +19,7 @@ class AuthController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email", "password"},
-     *             @OA\Property(property="email", type="string", format="email", example="user@example.com"),
+     *             @OA\Property(property="email", type="string", format="email", example="admin@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="password123")
      *         )
      *     ),
@@ -89,6 +89,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/logout",
      *     summary="Cerrar sesión",
+     *     security={{"bearerAuth":{}}},
      *     description="Cierra la sesión del usuario actual invalidando su token JWT.",
      *     operationId="logout",
      *     tags={"Auth"},
@@ -111,6 +112,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/refresh",
      *     summary="Actualizar el token JWT",
+     *     security={{"bearerAuth":{}}},
      *     description="Permite a los usuarios actualizar su token JWT si el token actual es válido.",
      *     operationId="refresh",
      *     tags={"Auth"},
@@ -145,6 +147,7 @@ class AuthController extends Controller
      * @OA\Get(
      *     path="/api/profile",
      *     summary="Obtener información del perfil del usuario",
+     *     security={{"bearerAuth":{}}},
      *     description="Devuelve los datos del usuario autenticado.",
      *     operationId="profile",
      *     tags={"Auth"},

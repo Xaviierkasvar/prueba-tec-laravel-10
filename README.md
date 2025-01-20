@@ -81,6 +81,7 @@ php artisan test --filter TaskControllerTest
 
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000/api
+- Documentación Swagger/OpenAPI: http://localhost:8000/api/documentation/
 
 ### Credenciales de Prueba
 

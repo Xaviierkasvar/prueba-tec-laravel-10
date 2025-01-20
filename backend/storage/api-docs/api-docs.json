@@ -1,7 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Módulo de Gestión de Inventarios",
+        "title": "API de Gestión de Tareas",
+        "description": "API para sistema de gestión de tareas con autenticación JWT",
         "version": "1.0.0"
     },
     "paths": {
@@ -11,7 +12,7 @@
                     "Auth"
                 ],
                 "summary": "Iniciar sesión y obtener un token JWT",
-                "description": "Permite a los usuarios iniciar sesión proporcionando su nombre de usuario y contraseña. Devuelve un token JWT si las credenciales son válidas.",
+                "description": "Permite a los usuarios iniciar sesión proporcionando su email y contraseña.",
                 "operationId": "login",
                 "requestBody": {
                     "required": true,
@@ -19,13 +20,14 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "username",
+                                    "email",
                                     "password"
                                 ],
                                 "properties": {
-                                    "username": {
+                                    "email": {
                                         "type": "string",
-                                        "example": "usuario123"
+                                        "format": "email",
+                                        "example": "admin@example.com"
                                     },
                                     "password": {
                                         "type": "string",
@@ -40,14 +42,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Inicio de sesión exitoso, devuelve un token JWT.",
+                        "description": "Inicio de sesión exitoso",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "access_token": {
+                                        "status": {
                                             "type": "string",
-                                            "example": "eyJhbGciOiJIUzI1NiIsInR5..."
+                                            "example": "success"
+                                        },
+                                        "access_token": {
+                                            "type": "string"
                                         },
                                         "token_type": {
                                             "type": "string",
@@ -67,12 +72,19 @@
                         }
                     },
                     "422": {
-                        "description": "Error de validación en las credenciales proporcionadas.",
+                        "description": "Error de validación",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "errors": {
                                             "type": "object"
                                         }
                                     },
@@ -82,12 +94,16 @@
                         }
                     },
                     "401": {
-                        "description": "Credenciales inválidas.",
+                        "description": "Credenciales inválidas",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
                                             "type": "string",
                                             "example": "Credenciales inválidas"
                                         }
@@ -125,7 +141,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/refresh": {
@@ -176,7 +197,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/profile": {
@@ -203,7 +229,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/tasks": {
@@ -237,7 +268,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -316,7 +352,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/tasks/{id}": {
@@ -378,7 +419,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -469,7 +515,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -530,7 +581,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/tasks/{id}/toggle-status": {
@@ -596,7 +652,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },

@@ -8,7 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *    title="Módulo de Gestión de Inventarios",
+ *    title="API de Gestión de Tareas",
+ *    description="API para sistema de gestión de tareas con autenticación JWT",
  *    version="1.0.0",
  * )
  * @OA\SecurityScheme(
